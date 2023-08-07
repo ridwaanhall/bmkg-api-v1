@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, Response
-from Controller.GempaController import datagempa, last30event, last30feltevent, last30tsunamievent, live30event, EmgempaQL, katalog_gempa, sensor_seismic, sensor_global, build_xml
+from Controller.GempaController import datagempa, last30event, last30feltevent, last30tsunamievent, live30event, EmgempaQL, katalog_gempa, sensor_seismic, sensor_global, build_xml, histori, indo_faults_lines, convert_to_xml, fault_indo_world, load_geojson
 import xmltodict
 
 app = Flask(__name__)
@@ -184,6 +184,86 @@ def sensor_global_json():
   data = sensor_global()
   if data:
     return jsonify(data)
+  else:
+    return jsonify({"message": "Failed to fetch data."}), 500
+
+
+# HISTORI
+@app.route('/histori.xml')
+def histori_xml():
+  data = histori()
+  if data:
+    # Wrap the data in a root element named "root"
+    wrapped_data = {"root": data}
+    xml_data = xmltodict.unparse(wrapped_data, pretty=True)
+    return Response(xml_data, content_type='text/xml')
+  else:
+    return jsonify({"message": "Failed to fetch data."}), 500
+
+
+@app.route('/histori.json')
+def histori_json():
+  data = histori()
+  if data:
+    return jsonify(data)
+  else:
+    return jsonify({"message": "Failed to fetch data."}), 500
+
+
+# INDO FAULTS LINES
+@app.route('/indo_faults_lines.xml')
+def indo_faults_lines_xml():
+  data = indo_faults_lines()
+  if data:
+    xml_data = convert_to_xml(data)
+    return Response(xml_data, content_type='text/xml')
+  else:
+    return jsonify({"message": "Failed to fetch data."}), 500
+
+
+@app.route('/indo_faults_lines.json')
+def indo_faults_lines_json():
+  data = indo_faults_lines()
+  if data:
+    return jsonify(data)
+  else:
+    return jsonify({"message": "Failed to fetch data."}), 500
+
+
+@app.route('/indo_faults_lines.geojson')
+def indo_faults_lines_geojson():
+  geojson_data = load_geojson()
+  if geojson_data:
+    return Response(geojson_data, content_type='application/json')
+  else:
+    return jsonify({"message": "Failed to fetch data."}), 500
+
+
+# FAULT INDO WORLD
+@app.route('/fault_indo_world.xml')
+def fault_indo_world_xml():
+  data = fault_indo_world()
+  if data:
+    xml_data = convert_to_xml(data)
+    return Response(xml_data, content_type='text/xml')
+  else:
+    return jsonify({"message": "Failed to fetch data."}), 500
+
+
+@app.route('/fault_indo_world.json')
+def fault_indo_world_json():
+  data = fault_indo_world()
+  if data:
+    return jsonify(data)
+  else:
+    return jsonify({"message": "Failed to fetch data."}), 500
+
+
+@app.route('/fault_indo_world.geojson')
+def fault_indo_world_geojson():
+  geojson_data = load_geojson()
+  if geojson_data:
+    return Response(geojson_data, content_type='application/json')
   else:
     return jsonify({"message": "Failed to fetch data."}), 500
 
