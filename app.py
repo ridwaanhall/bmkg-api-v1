@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, Response
-from Controller.GempaController import datagempa, last30event, last30feltevent, last30tsunamievent, live30event
+from Controller.GempaController import datagempa, last30event, last30feltevent, last30tsunamievent, live30event, EmgempaQL, katalog_gempa, sensor_seismic, sensor_global, build_xml
 import xmltodict
 
 app = Flask(__name__)
@@ -28,6 +28,50 @@ def datagempa_xml():
 @app.route('/datagempa.json')
 def datagempa_json():
   data = datagempa()
+  if data:
+    return jsonify(data)
+  else:
+    return jsonify({"message": "Failed to fetch data."}), 500
+
+
+# 200 GEMPA LEBIH 3 MAG
+@app.route('/EmgempaQL.xml')
+def EmgempaQL_xml():
+  data = EmgempaQL()
+  if data:
+    # Wrap the data in a root element named "root"
+    wrapped_data = {"root": data}
+    xml_data = xmltodict.unparse(wrapped_data, pretty=True)
+    return Response(xml_data, content_type='text/xml')
+  else:
+    return jsonify({"message": "Failed to fetch data."}), 500
+
+
+@app.route('/EmgempaQL.json')
+def EmgempaQL_json():
+  data = EmgempaQL()
+  if data:
+    return jsonify(data)
+  else:
+    return jsonify({"message": "Failed to fetch data."}), 500
+
+
+# 200 GEMPA LEBIH 5 MAG
+@app.route('/katalog_gempa.xml')
+def katalog_gempa_xml():
+  data = katalog_gempa()
+  if data:
+    # Wrap the data in a root element named "root"
+    wrapped_data = {"root": data}
+    xml_data = xmltodict.unparse(wrapped_data, pretty=True)
+    return Response(xml_data, content_type='text/xml')
+  else:
+    return jsonify({"message": "Failed to fetch data."}), 500
+
+
+@app.route('/katalog_gempa.json')
+def katalog_gempa_json():
+  data = katalog_gempa()
   if data:
     return jsonify(data)
   else:
@@ -100,6 +144,48 @@ def live30event_xml():
 def live30event_json():
   data = live30event()
   return jsonify(data)
+
+
+# SENSOR SEISMIC
+@app.route('/sensor_seismic.xml')
+def sensor_seismic_xml():
+  data = sensor_seismic()
+  if data:
+    # Wrap the data in a root element named "root"
+    wrapped_data = {"root": data}
+    xml_data = xmltodict.unparse(wrapped_data, pretty=True)
+    return Response(xml_data, content_type='text/xml')
+  else:
+    return jsonify({"message": "Failed to fetch data."}), 500
+
+
+@app.route('/sensor_seismic.json')
+def sensor_seismic_json():
+  data = sensor_seismic()
+  if data:
+    return jsonify(data)
+  else:
+    return jsonify({"message": "Failed to fetch data."}), 500
+
+
+# SENSOR GLOBAL
+@app.route('/sensor_global.xml')
+def sensor_global_xml():
+  data = sensor_global()
+  if data:
+    xml_data = build_xml(data)
+    return Response(xml_data, content_type='text/xml')
+  else:
+    return jsonify({"message": "Failed to fetch data."}), 500
+
+
+@app.route('/sensor_global.json')
+def sensor_global_json():
+  data = sensor_global()
+  if data:
+    return jsonify(data)
+  else:
+    return jsonify({"message": "Failed to fetch data."}), 500
 
 
 if __name__ == '__main__':
