@@ -281,8 +281,8 @@ def fault_indo_world_geojson():
 
 
 # IMAGE OF GEMPA_NEWS
-@app.route('/img_news.json', methods=['GET'])
-def img_news_json():
+@app.route('/img_new.json', methods=['GET'])
+def img_new_json():
   urls = process_gempa_data()
   if urls:
     return jsonify(urls)
@@ -290,8 +290,8 @@ def img_news_json():
     return "Failed to fetch data."
 
 
-@app.route('/img_news.xml', methods=['GET'])
-def img_news_xml():
+@app.route('/img_new.xml', methods=['GET'])
+def img_new_xml():
   urls = process_gempa_data()
   if urls:
     xml_root = ET.Element('urls')
