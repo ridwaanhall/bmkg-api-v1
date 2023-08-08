@@ -2,6 +2,7 @@ import requests, xmltodict, json
 import xml.etree.ElementTree as ET
 from flask import jsonify
 
+
 def build_xml(data):
   # Manually build the XML structure for each station
   xml_data = '<?xml version="1.0" encoding="UTF-8"?><stations>'
@@ -40,7 +41,32 @@ def load_geojson():
     return jsonify({"message": "Failed to fetch data."}), 500
 
 
+def fetch_json_data(json_url):
+  response = requests.get(json_url)
+  if response.status_code == 200:
+    return response.json()
+  else:
+    return None
+
+
+def construct_urls(event_id):
+  urls = {
+    'intensity_logo':
+    f"https://bmkg-content-inatews.storage.googleapis.com/{event_id}_rev/intensity_logo.jpg",
+    'loc_map':
+    f"https://bmkg-content-inatews.storage.googleapis.com/{event_id}_rev/loc_map.png",
+    'impact_list':
+    f"https://bmkg-content-inatews.storage.googleapis.com/{event_id}_rev/impact_list.jpg",
+    'stationlist_MMI':
+    f"https://bmkg-content-inatews.storage.googleapis.com/{event_id}_rev/stationlist_MMI.jpg",
+    f'{event_id}': f"https://data.bmkg.go.id/DataMKG/TEWS/{event_id}.mmi.jpg"
+  }
+
+  return urls
+
+
 #=========================
+# DATA GEMPA
 def datagempa():
   url = "https://bmkg-content-inatews.storage.googleapis.com/datagempa.json"
   response = requests.get(url)
@@ -148,3 +174,39 @@ def fault_indo_world():
     return response.json()
   else:
     return None
+
+
+def process_gempa_data():
+  json_url = "https://bmkg-content-inatews.storage.googleapis.com/datagempa.json"
+  json_data = fetch_json_data(json_url)
+
+  if json_data:
+    event_id = json_data['info']['eventid']
+    urls = construct_urls(event_id)
+    return urls
+  else:
+    return None
+
+
+def autogempa():
+  url = "https://data.bmkg.go.id/DataMKG/TEWS/autogempa.xml"
+  response = requests.get(url)
+  xml_data = response.content
+  data_dict = xmltodict.parse(xml_data)
+  return data_dict
+
+
+def gempaterkini():
+  url = "https://data.bmkg.go.id/DataMKG/TEWS/gempaterkini.xml"
+  response = requests.get(url)
+  xml_data = response.content
+  data_dict = xmltodict.parse(xml_data)
+  return data_dict
+
+
+def gempadirasakan():
+  url = "https://data.bmkg.go.id/DataMKG/TEWS/gempadirasakan.xml"
+  response = requests.get(url)
+  xml_data = response.content
+  data_dict = xmltodict.parse(xml_data)
+  return data_dict
