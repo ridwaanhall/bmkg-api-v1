@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, Response
 from Controller.GempaController import datagempa, last30event, last30feltevent, last30tsunamievent, live30event, EmgempaQL, katalog_gempa, sensor_seismic, sensor_global, build_xml, histori, indo_faults_lines, convert_to_xml, fault_indo_world, load_geojson, process_gempa_data, autogempa, gempaterkini, gempadirasakan
+from Controller.HomeController import load_home_json
 import xmltodict
 from xml.etree import ElementTree as ET
 
@@ -7,8 +8,20 @@ app = Flask(__name__)
 
 
 @app.route("/")
-def hello_world():
-  return "hehehe"
+def home():
+  # Load JSON data using the function from HomeController
+  data = load_home_json()
+  # Convert the data to a JSON response
+  return jsonify(data)
+
+
+@app.route("/xml")
+def xml():
+  # Convert the JSON data to XML using xmltodict
+  data = load_home_json()
+  xml_data = xmltodict.unparse({"data": data}, pretty=True)
+  # Return the XML response
+  return Response(xml_data, content_type='text/xml')
 
 
 # GEMPA TERBARU (from json to xml)
