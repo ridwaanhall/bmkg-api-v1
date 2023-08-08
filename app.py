@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, Response
-from Controller.GempaController import datagempa, last30event, last30feltevent, last30tsunamievent, live30event, EmgempaQL, katalog_gempa, sensor_seismic, sensor_global, build_xml, histori, indo_faults_lines, convert_to_xml, fault_indo_world, load_geojson
+from Controller.GempaController import datagempa, last30event, last30feltevent, last30tsunamievent, live30event, EmgempaQL, katalog_gempa, sensor_seismic, sensor_global, build_xml, histori, indo_faults_lines, convert_to_xml, fault_indo_world, load_geojson, process_gempa_data, autogempa, gempaterkini, gempadirasakan
 import xmltodict
+from xml.etree import ElementTree as ET
 
 app = Flask(__name__)
 
@@ -11,8 +12,7 @@ def hello_world():
 
 
 # GEMPA TERBARU (from json to xml)
-@app.route('/gempa-terkini.xml')
-@app.route('/datagempa.xml')
+@app.route('/new.xml')
 def datagempa_xml():
   data = datagempa()
   if data:
@@ -24,8 +24,7 @@ def datagempa_xml():
     return jsonify({"message": "Failed to fetch data."}), 500
 
 
-@app.route('/gempa-terkini.json')
-@app.route('/datagempa.json')
+@app.route('/new.json')
 def datagempa_json():
   data = datagempa()
   if data:
@@ -56,7 +55,7 @@ def EmgempaQL_json():
     return jsonify({"message": "Failed to fetch data."}), 500
 
 
-# 200 GEMPA LEBIH 5 MAG
+# GEMPA DARI ZAMAN DAHULU
 @app.route('/katalog_gempa.xml')
 def katalog_gempa_xml():
   data = katalog_gempa()
@@ -78,7 +77,7 @@ def katalog_gempa_json():
     return jsonify({"message": "Failed to fetch data."}), 500
 
 
-# GEMPA LEBIH DARI SAMADENGAN 5 MAG (from xml to xml)
+# GEMPA LEBIH DARI SAMADENGAN 5 MAG (from xml to xml) 30 LIST
 @app.route('/m5.xml')
 @app.route('/last30event.xml')
 def last30event_xml():
@@ -95,7 +94,7 @@ def last30event_json():
   return jsonify(data)
 
 
-# GEMPA YANG DIRASAKAN
+# GEMPA YANG DIRASAKAN. 30 LIST
 @app.route('/felt.xml')
 @app.route('/last30feltevent.xml')
 def last30feltevent_xml():
@@ -112,7 +111,7 @@ def last30feltevent_json():
   return jsonify(data)
 
 
-# GEMPA YANG KEMUNGKINAN STUNAMI
+# GEMPA YANG KEMUNGKINAN STUNAMI 30 LIST
 @app.route('/tsunami.xml')
 @app.route('/last30tsunamievent.xml')
 def last30tsunamievent_xml():
@@ -129,7 +128,7 @@ def last30tsunamievent_json():
   return jsonify(data)
 
 
-# GEMPA REAL-TIME
+# GEMPA REAL-TIME 30 LIST
 @app.route('/realtime.xml')
 @app.route('/live30event.xml')
 def live30event_xml():
@@ -266,6 +265,79 @@ def fault_indo_world_geojson():
     return Response(geojson_data, content_type='application/json')
   else:
     return jsonify({"message": "Failed to fetch data."}), 500
+
+
+# IMAGE OF GEMPA_NEWS
+@app.route('/img_news.json', methods=['GET'])
+def img_news_json():
+  urls = process_gempa_data()
+  if urls:
+    return jsonify(urls)
+  else:
+    return "Failed to fetch data."
+
+
+@app.route('/img_news.xml', methods=['GET'])
+def img_news_xml():
+  urls = process_gempa_data()
+  if urls:
+    xml_root = ET.Element('urls')
+    for key, url in urls.items():
+      url_elem = ET.SubElement(xml_root, 'url')
+      key_elem = ET.SubElement(url_elem, 'key')
+      key_elem.text = key
+      url_elem.text = url
+
+    xml_string = ET.tostring(xml_root, encoding='utf-8', method='xml')
+    response = Response(xml_string, content_type='application/xml')
+    return response
+  else:
+    return "Failed to fetch data."
+
+
+# Gempabumi Terbaru
+@app.route('/autogempa.xml')
+def autogempa_xml():
+  data = autogempa()
+  response = Response(xmltodict.unparse(data, pretty=True),
+                      content_type='application/xml')
+  return response
+
+
+@app.route('/autogempa.json')
+def autogempa_json():
+  data = autogempa()
+  return jsonify(data)
+
+
+# Daftar 15 Gempabumi M 5.0+
+@app.route('/gempaterkini.xml')
+def gempaterkini_xml():
+  data = gempaterkini()
+  response = Response(xmltodict.unparse(data, pretty=True),
+                      content_type='application/xml')
+  return response
+
+
+@app.route('/gempaterkini.json')
+def gempaterkini_json():
+  data = gempaterkini()
+  return jsonify(data)
+
+
+# Daftar 15 Gempabumi Dirasakan
+@app.route('/gempadirasakan.xml')
+def gempadirasakan_xml():
+  data = gempadirasakan()
+  response = Response(xmltodict.unparse(data, pretty=True),
+                      content_type='application/xml')
+  return response
+
+
+@app.route('/gempadirasakan.json')
+def gempadirasakan_json():
+  data = gempadirasakan()
+  return jsonify(data)
 
 
 if __name__ == '__main__':
