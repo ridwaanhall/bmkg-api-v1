@@ -179,7 +179,7 @@ def fault_indo_world():
 def process_gempa_data():
   json_url = "https://bmkg-content-inatews.storage.googleapis.com/datagempa.json"
   json_data = fetch_json_data(json_url)
-
+  # get eventid
   if json_data:
     event_id = json_data['info']['eventid']
     urls = construct_urls(event_id)
