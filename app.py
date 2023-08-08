@@ -7,15 +7,15 @@ from xml.etree import ElementTree as ET
 app = Flask(__name__)
 
 
-@app.route("/")
-def home():
+@app.route("/json")
+def json_home():
   # Load JSON data using the function from HomeController
   data = load_home_json()
   # Convert the data to a JSON response
   return jsonify(data)
 
 
-@app.route("/xml")
+@app.route("/")
 def xml():
   # Convert the JSON data to XML using xmltodict
   data = load_home_json()
