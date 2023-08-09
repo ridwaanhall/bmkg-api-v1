@@ -1,53 +1,154 @@
-# ImageController.py
-from flask import send_file
 import requests
-from io import BytesIO
+from flask import Response
 
 
-def construct_urls(event_id):
-  urls = {
-    'intensity_logo':
-    f"https://bmkg-content-inatews.storage.googleapis.com/{event_id}_rev/intensity_logo.jpg",
-    'loc_map':
-    f"https://bmkg-content-inatews.storage.googleapis.com/{event_id}_rev/loc_map.png",
-    'impact_list':
-    f"https://bmkg-content-inatews.storage.googleapis.com/{event_id}_rev/impact_list.jpg",
-    'stationlist_MMI':
-    f"https://bmkg-content-inatews.storage.googleapis.com/{event_id}_rev/stationlist_MMI.jpg",
-    f'{event_id}': f"https://data.bmkg.go.id/DataMKG/TEWS/{event_id}.mmi.jpg"
-  }
+class ImageController:
 
-  return urls
+  @staticmethod
+  def get_eventid(json_data):
+    return json_data.get("info", {}).get("eventid")
 
+  @staticmethod
+  def intensity_logo_route(eventid):
+    json_url = "https://bmkg-content-inatews.storage.googleapis.com/datagempa.json"
+    response = requests.get(json_url)
 
-def fetch_json_data(url):
-  response = requests.get(url)
-  if response.status_code == 200:
-    return response.json()
-  else:
-    return None
+    if response.status_code == 200:
+      json_data = response.json()
+      event_id = ImageController.get_eventid(json_data)
 
+      if event_id == eventid:
+        image_data = ImageController.intensity_logo(eventid)
+        if image_data:
+          return Response(image_data, content_type='image/jpeg')
+        else:
+          return "Image not found", 404
+      else:
+        return "Event ID mismatch", 400
+    else:
+      return "Failed to fetch JSON data", 500
 
-def serve_image():
-  image_url = 'https://bmkg-content-inatews.storage.googleapis.com/20230809025718_rev/intensity_logo.jpg'
+  @staticmethod
+  def impact_list_route(eventid):
+    json_url = "https://bmkg-content-inatews.storage.googleapis.com/datagempa.json"
+    response = requests.get(json_url)
 
-  response = requests.get(image_url)
-  if response.status_code == 200:
-    image_data = BytesIO(
-      response.content)  # Convert bytes to a file-like object
-    return send_file(image_data, mimetype='image/jpeg')
-  else:
-    return "Image not found", 404
+    if response.status_code == 200:
+      json_data = response.json()
+      event_id = ImageController.get_eventid(json_data)
 
+      if event_id == eventid:
+        image_data = ImageController.impact_list(eventid)
+        if image_data:
+          return Response(image_data, content_type='image/jpeg')
+        else:
+          return "Image not found", 404
+      else:
+        return "Event ID mismatch", 400
+    else:
+      return "Failed to fetch JSON data", 500
 
-# get eventid to show img
-def process_gempa_data():
-  url = "https://bmkg-content-inatews.storage.googleapis.com/datagempa.json"
-  json_data = fetch_json_data(url)
-  # get eventid
-  if json_data:
-    event_id = json_data['info']['eventid']
-    urls = construct_urls(event_id)
-    return urls
-  else:
-    return None
+  @staticmethod
+  def stationlist_mmi_route(eventid):
+    json_url = "https://bmkg-content-inatews.storage.googleapis.com/datagempa.json"
+    response = requests.get(json_url)
+
+    if response.status_code == 200:
+      json_data = response.json()
+      event_id = ImageController.get_eventid(json_data)
+
+      if event_id == eventid:
+        image_data = ImageController.stationlist_mmi(eventid)
+        if image_data:
+          return Response(image_data, content_type='image/jpeg')
+        else:
+          return "Image not found", 404
+      else:
+        return "Event ID mismatch", 400
+    else:
+      return "Failed to fetch JSON data", 500
+
+  @staticmethod
+  def mmi_route(eventid):
+    json_url = "https://bmkg-content-inatews.storage.googleapis.com/datagempa.json"
+    response = requests.get(json_url)
+
+    if response.status_code == 200:
+      json_data = response.json()
+      event_id = ImageController.get_eventid(json_data)
+
+      if event_id == eventid:
+        image_data = ImageController.mmi(eventid)
+        if image_data:
+          return Response(image_data, content_type='image/jpeg')
+        else:
+          return "Image not found", 404
+      else:
+        return "Event ID mismatch", 400
+    else:
+      return "Failed to fetch JSON data", 500
+
+  @staticmethod
+  def loc_map_route(eventid):
+    json_url = "https://bmkg-content-inatews.storage.googleapis.com/datagempa.json"
+    response = requests.get(json_url)
+
+    if response.status_code == 200:
+      json_data = response.json()
+      event_id = ImageController.get_eventid(json_data)
+
+      if event_id == eventid:
+        image_data = ImageController.loc_map(eventid)
+        if image_data:
+          return Response(image_data, content_type='image/png')
+        else:
+          return "Image not found", 404
+      else:
+        return "Event ID mismatch", 400
+    else:
+      return "Failed to fetch JSON data", 500
+
+  @staticmethod
+  def intensity_logo(eventid):
+    url = f"https://bmkg-content-inatews.storage.googleapis.com/{eventid}_rev/intensity_logo.jpg"
+    response = requests.get(url)
+    if response.status_code == 200:
+      return response.content
+    else:
+      return None
+
+  @staticmethod
+  def impact_list(eventid):
+    url = f"https://bmkg-content-inatews.storage.googleapis.com/{eventid}_rev/impact_list.jpg"
+    response = requests.get(url)
+    if response.status_code == 200:
+      return response.content
+    else:
+      return None
+
+  @staticmethod
+  def stationlist_mmi(eventid):
+    url = f"https://bmkg-content-inatews.storage.googleapis.com/{eventid}_rev/stationlist_MMI.jpg"
+    response = requests.get(url)
+    if response.status_code == 200:
+      return response.content
+    else:
+      return None
+
+  @staticmethod
+  def loc_map(eventid):
+    url = f"https://bmkg-content-inatews.storage.googleapis.com/{eventid}_rev/loc_map.png"
+    response = requests.get(url)
+    if response.status_code == 200:
+      return response.content
+    else:
+      return None
+
+  @staticmethod
+  def mmi(eventid):
+    url = f"https://data.bmkg.go.id/DataMKG/TEWS/{eventid}.mmi.jpg"
+    response = requests.get(url)
+    if response.status_code == 200:
+      return response.content
+    else:
+      return None
