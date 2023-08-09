@@ -2,215 +2,234 @@
   "base_url": "https://earthquake-bmkg-api.ridwaanhall.repl.co/",
   "source": "bmkg",
   "how_to_use": "Use base URL + route",
-  "route_available": "new.xml, new.json, EmgempaQL.xml, EmgempaQL.json, katalog_gempa.xml, katalog_gempa.json, m5.xml, m5.json, felt.xml, felt.json, tsunami.xml, tsunami.json, realtime.xml, realtime.json, sensor_seismic.xml, sensor_seismic.json, sensor_global.xml, sensor_global.json, histori.xml, histori.json, indo_faults_lines.xml, indo_faults_lines.json, indo_faults_lines.geojson, fault_indo_world.xml, fault_indo_world.json, fault_indo_world.geojson, img_news.json, img_news.xml, autogempa.xml, autogempa.json, gempaterkini.xml, gempaterkini.json, gempadirasakan.xml, gempadirasakan.json",
+  "route_available": "new.xml, new.json, EmgempaQL.xml, EmgempaQL.json, katalog_gempa.xml, katalog_gempa.json, m5.xml, m5.json, felt.xml, felt.json, tsunami.xml, tsunami.json, realtime.xml, realtime.json, sensor_seismic.xml, sensor_seismic.json, sensor_global.xml, sensor_global.json, histori.xml, histori.json, indo_faults_lines.xml, indo_faults_lines.json, indo_faults_lines.geojson, fault_indo_world.xml, fault_indo_world.json, fault_indo_world.geojson, autogempa.xml, autogempa.json, gempaterkini.xml, gempaterkini.json, gempadirasakan.xml, gempadirasakan.json, <eventid>_rev/intensity_logo.jpg, <eventid>_rev/impact_list.jpg, <eventid>_rev/stationlist_MMI.jpg, <eventid>_rev/loc_map.png, <eventid>.mmi.jpg",
   "routes":
     {
       "route_list":
-      [
-        {
-          "note": "Latest earthquake data in XML format.",
-          "route": "/new.xml",
-          "function": "datagempa",
-          "format": "xml"
-        },
-        {
-          "note": "Latest earthquake data in JSON format.",
-          "route": "/new.json",
-          "function": "datagempa",
-          "format": "json"
-        },
-        {
-          "note": "Earthquake data with magnitude > 3 in XML format.",
-          "route": "/EmgempaQL.xml",
-          "function": "EmgempaQL",
-          "format": "xml"
-        },
-        {
-          "note": "Earthquake data with magnitude > 3 in JSON format.",
-          "route": "/EmgempaQL.json",
-          "function": "EmgempaQL",
-          "format": "json"
-        },
-        {
-          "note": "Historical earthquake data in XML format.",
-          "route": "/katalog_gempa.xml",
-          "function": "katalog_gempa",
-          "format": "xml"
-        },
-        {
-          "note": "Historical earthquake data in JSON format.",
-          "route": "/katalog_gempa.json",
-          "function": "katalog_gempa",
-          "format": "json"
-        },
-        {
-          "note": "Recent earthquakes with magnitude > 5 in XML format.",
-          "route": "/m5.xml",
-          "function": "last30event",
-          "format": "xml"
-        },
-        {
-          "note": "Recent earthquakes with magnitude > 5 in JSON format.",
-          "route": "/m5.json",
-          "function": "last30event",
-          "format": "json"
-        },
-        {
-          "note": "Recent felt earthquakes in XML format.",
-          "route": "/felt.xml",
-          "function": "last30feltevent",
-          "format": "xml"
-        },
-        {
-          "note": "Recent felt earthquakes in JSON format.",
-          "route": "/felt.json",
-          "function": "last30feltevent",
-          "format": "json"
-        },
-        {
-          "note": "Recent potential tsunami earthquakes in XML format.",
-          "route": "/tsunami.xml",
-          "function": "last30tsunamievent",
-          "format": "xml"
-        },
-        {
-          "note": "Recent potential tsunami earthquakes in JSON format.",
-          "route": "/tsunami.json",
-          "function": "last30tsunamievent",
-          "format": "json"
-        },
-        {
-          "note": "Real-time earthquakes in XML format.",
-          "route": "/realtime.xml",
-          "function": "live30event",
-          "format": "xml"
-        },
-        {
-          "note": "Real-time earthquakes in JSON format.",
-          "route": "/realtime.json",
-          "function": "live30event",
-          "format": "json"
-        },
-        {
-          "note": "Seismic sensor data in XML format.",
-          "route": "/sensor_seismic.xml",
-          "function": "sensor_seismic",
-          "format": "xml"
-        },
-        {
-          "note": "Seismic sensor data in JSON format.",
-          "route": "/sensor_seismic.json",
-          "function": "sensor_seismic",
-          "format": "json"
-        },
-        {
-          "note": "Global seismic sensor data in XML format.",
-          "route": "/sensor_global.xml",
-          "function": "sensor_global",
-          "format": "xml"
-        },
-        {
-          "note": "Global seismic sensor data in JSON format.",
-          "route": "/sensor_global.json",
-          "function": "sensor_global",
-          "format": "json"
-        },
-        {
-          "note": "Historical earthquake data in XML format.",
-          "route": "/histori.xml",
-          "function": "histori",
-          "format": "xml"
-        },
-        {
-          "note": "Historical earthquake data in JSON format.",
-          "route": "/histori.json",
-          "function": "histori",
-          "format": "json"
-        },
-        {
-          "note": "Indonesia fault lines in XML format.",
-          "route": "/indo_faults_lines.xml",
-          "function": "indo_faults_lines",
-          "format": "xml"
-        },
-        {
-          "note": "Indonesia fault lines in JSON format.",
-          "route": "/indo_faults_lines.json",
-          "function": "indo_faults_lines",
-          "format": "json"
-        },
-        {
-          "note": "Indonesia fault lines in GeoJSON format.",
-          "route": "/indo_faults_lines.geojson",
-          "function": "load_geojson",
-          "format": "geojson"
-        },
-        {
-          "note": "World fault lines in XML format.",
-          "route": "/fault_indo_world.xml",
-          "function": "fault_indo_world",
-          "format": "xml"
-        },
-        {
-          "note": "World fault lines in JSON format.",
-          "route": "/fault_indo_world.json",
-          "function": "fault_indo_world",
-          "format": "json"
-        },
-        {
-          "note": "World fault lines in GeoJSON format.",
-          "route": "/fault_indo_world.geojson",
-          "function": "load_geojson",
-          "format": "geojson"
-        },
-        {
-          "note": "Image URLs related to recent earthquake news in JSON format.",
-          "route": "/img_news.json",
-          "function": "process_gempa_data",
-          "format": "json"
-        },
-        {
-          "note": "Image URLs related to recent earthquake news in XML format.",
-          "route": "/img_news.xml",
-          "function": "process_gempa_data",
-          "format": "xml"
-        },
-        {
-          "note": "Recent earthquake data (autogempa) in XML format.",
-          "route": "/autogempa.xml",
-          "function": "autogempa",
-          "format": "xml"
-        },
-        {
-          "note": "Recent earthquake data (autogempa) in JSON format.",
-          "route": "/autogempa.json",
-          "function": "autogempa",
-          "format": "json"
-        },
-        {
-          "note": "Recent earthquakes with magnitude > 5 (gempaterkini) in XML format.",
-          "route": "/gempaterkini.xml",
-          "function": "gempaterkini",
-          "format": "xml"
-        },
-        {
-          "note": "Recent earthquakes with magnitude > 5 (gempaterkini) in JSON format.",
-          "route": "/gempaterkini.json",
-          "function": "gempaterkini",
-          "format": "json"
-        },
-        {
-          "note": "Recent felt earthquakes (gempadirasakan) in XML format.",
-          "route": "/gempadirasakan.xml",
-          "function": "gempadirasakan",
-          "format": "xml"
-        },
-        {
-          "note": "Recent felt earthquakes (gempadirasakan) in JSON format.",
-          "route": "/gempadirasakan.json",
-          "function": "gempadirasakan",
-          "format": "json"
-        }
-      ]
+        [
+            {
+                "note": "Latest earthquake data in XML format.",
+                "route": "/new.xml",
+                "function": "datagempa",
+                "format": "xml"
+            },
+            {
+                "note": "Latest earthquake data in JSON format.",
+                "route": "/new.json",
+                "function": "datagempa",
+                "format": "json"
+            },
+            {
+                "note": "Latest earthquakes with magnitude greater than 3 in XML format.",
+                "route": "/EmgempaQL.xml",
+                "function": "EmgempaQL",
+                "format": "xml"
+            },
+            {
+                "note": "Latest earthquakes with magnitude greater than 3 in JSON format.",
+                "route": "/EmgempaQL.json",
+                "function": "EmgempaQL",
+                "format": "json"
+            },
+            {
+                "note": "Catalog of historical earthquakes in XML format.",
+                "route": "/katalog_gempa.xml",
+                "function": "katalog_gempa",
+                "format": "xml"
+            },
+            {
+                "note": "Catalog of historical earthquakes in JSON format.",
+                "route": "/katalog_gempa.json",
+                "function": "katalog_gempa",
+                "format": "json"
+            },
+            {
+                "note": "List of earthquakes with magnitude greater than or equal to 5 in the last 30 events in XML format.",
+                "route": "/m5.xml",
+                "function": "last30event",
+                "format": "xml"
+            },
+            {
+                "note": "List of earthquakes with magnitude greater than or equal to 5 in the last 30 events in JSON format.",
+                "route": "/m5.json",
+                "function": "last30event",
+                "format": "json"
+            },
+            {
+                "note": "List of felt earthquakes in the last 30 events in XML format.",
+                "route": "/felt.xml",
+                "function": "last30feltevent",
+                "format": "xml"
+            },
+            {
+                "note": "List of felt earthquakes in the last 30 events in JSON format.",
+                "route": "/felt.json",
+                "function": "last30feltevent",
+                "format": "json"
+            },
+            {
+                "note": "List of potential tsunami earthquakes in the last 30 events in XML format.",
+                "route": "/tsunami.xml",
+                "function": "last30tsunamievent",
+                "format": "xml"
+            },
+            {
+                "note": "List of potential tsunami earthquakes in the last 30 events in JSON format.",
+                "route": "/tsunami.json",
+                "function": "last30tsunamievent",
+                "format": "json"
+            },
+            {
+                "note": "List of real-time earthquakes in the last 30 events in XML format.",
+                "route": "/realtime.xml",
+                "function": "live30event",
+                "format": "xml"
+            },
+            {
+                "note": "List of real-time earthquakes in the last 30 events in JSON format.",
+                "route": "/realtime.json",
+                "function": "live30event",
+                "format": "json"
+            },
+            {
+                "note": "Seismic sensor data in XML format.",
+                "route": "/sensor_seismic.xml",
+                "function": "sensor_seismic",
+                "format": "xml"
+            },
+            {
+                "note": "Seismic sensor data in JSON format.",
+                "route": "/sensor_seismic.json",
+                "function": "sensor_seismic",
+                "format": "json"
+            },
+            {
+                "note": "Global sensor data in XML format.",
+                "route": "/sensor_global.xml",
+                "function": "sensor_global",
+                "format": "xml"
+            },
+            {
+                "note": "Global sensor data in JSON format.",
+                "route": "/sensor_global.json",
+                "function": "sensor_global",
+                "format": "json"
+            },
+            {
+                "note": "Historical earthquake data in XML format.",
+                "route": "/histori.xml",
+                "function": "histori",
+                "format": "xml"
+            },
+            {
+                "note": "Historical earthquake data in JSON format.",
+                "route": "/histori.json",
+                "function": "histori",
+                "format": "json"
+            },
+            {
+                "note": "Indonesia fault lines data in XML format.",
+                "route": "/indo_faults_lines.xml",
+                "function": "indo_faults_lines",
+                "format": "xml"
+            },
+            {
+                "note": "Indonesia fault lines data in JSON format.",
+                "route": "/indo_faults_lines.json",
+                "function": "indo_faults_lines",
+                "format": "json"
+            },
+            {
+                "note": "Indonesia fault lines geojson data.",
+                "route": "/indo_faults_lines.geojson",
+                "function": "load_geojson",
+                "format": "geojson"
+            },
+            {
+                "note": "Indonesia and world fault lines data in XML format.",
+                "route": "/fault_indo_world.xml",
+                "function": "fault_indo_world",
+                "format": "xml"
+            },
+            {
+                "note": "Indonesia and world fault lines data in JSON format.",
+                "route": "/fault_indo_world.json",
+                "function": "fault_indo_world",
+                "format": "json"
+            },
+            {
+                "note": "Indonesia and world fault lines geojson data.",
+                "route": "/fault_indo_world.geojson",
+                "function": "load_geojson",
+                "format": "geojson"
+            },
+            {
+                "note": "Latest real-time earthquake data in XML format.",
+                "route": "/autogempa.xml",
+                "function": "autogempa",
+                "format": "xml"
+            },
+            {
+                "note": "Latest real-time earthquake data in JSON format.",
+                "route": "/autogempa.json",
+                "function": "autogempa",
+                "format": "json"
+            },
+            {
+                "note": "Latest 15 earthquakes with magnitude 5.0+ in XML format.",
+                "route": "/gempaterkini.xml",
+                "function": "gempaterkini",
+                "format": "xml"
+            },
+            {
+                "note": "Latest 15 earthquakes with magnitude 5.0+ in JSON format.",
+                "route": "/gempaterkini.json",
+                "function": "gempaterkini",
+                "format": "json"
+            },
+            {
+                "note": "Latest 15 felt earthquakes in XML format.",
+                "route": "/gempadirasakan.xml",
+                "function": "gempadirasakan",
+                "format": "xml"
+            },
+            {
+                "note": "Latest 15 felt earthquakes in JSON format.",
+                "route": "/gempadirasakan.json",
+                "function": "gempadirasakan",
+                "format": "json"
+            },
+            {
+                "note": "Route to serve intensity logo images.",
+                "route": "/<eventid>_rev/intensity_logo.jpg",
+                "function": "serve_intensity_logo",
+                "format": "image"
+            },
+            {
+                "note": "Route to serve impact list images.",
+                "route": "/<eventid>_rev/impact_list.jpg",
+                "function": "serve_impact_list",
+                "format": "image"
+            },
+            {
+                "note": "Route to serve stationlist MMI images.",
+                "route": "/<eventid>_rev/stationlist_MMI.jpg",
+                "function": "serve_stationlist_mmi",
+                "format": "image"
+            },
+            {
+                "note": "Route to serve loc_map images (PNG).",
+                "route": "/<eventid>_rev/loc_map.png",
+                "function": "serve_loc_map",
+                "format": "image"
+            },
+            {
+                "note": "Route to serve MMI images.",
+                "route": "/<eventid>.mmi.jpg",
+                "function": "mmi",
+                "format": "image"
+            }
+        ]
+        
     }
 }
