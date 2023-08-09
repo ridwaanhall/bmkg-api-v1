@@ -1,119 +1,62 @@
-from flask import Flask, jsonify, Response
-import xmltodict
+from flask import Flask, jsonify
 
 from Controller.GempaController import GempaController
-from Controller.HomeController import load_home_json
+from Controller.HomeController import HomeController
 from Controller.ImageController import ImageController
 
 app = Flask(__name__)
 
 
-# xml_root_response
-def xml_root_response(data):
-  if data:
-    wrapped_data = {"root": data}
-    xml_data = xmltodict.unparse(wrapped_data, pretty=True)
-    return Response(xml_data, content_type='text/xml')
-  else:
-    return jsonify({"message": "Failed to fetch data."}), 500
-
-
-# json_if
-def json_if(data):
-  if data:
-    return jsonify(data)
-  else:
-    return jsonify({"mzessage": "Failed to fetch data."}), 500
-
-
-# xml_response
-def xml_response(data):
-  response = Response(xmltodict.unparse(data, pretty=True),
-                      content_type='application/xml')
-  return response
-
-
-# faults_xml
-def faults_xml(data):
-  if data:
-    xml_data = GempaController.convert_to_xml(data)
-    return Response(xml_data, content_type='text/xml')
-  else:
-    return jsonify({"message": "Failed to fetch data."}), 500
-
-
-# faults_geojson
-def faults_geojson(geojson_data):
-  if geojson_data:
-    return Response(geojson_data, content_type='application/json')
-  else:
-    return jsonify({"message": "Failed to fetch data."}), 500
-
-
-def sensor_global_build_xml(data):
-  if data:
-    xml_data = GempaController.build_xml(data)
-    return Response(xml_data, content_type='text/xml')
-  else:
-    return jsonify({"message": "Failed to fetch data."}), 500
-
-
-#========================
-# home
-@app.route("/json")
-def json_home():
-  # Load JSON data using the function from HomeController
-  data = load_home_json()
-  # Convert the data to a JSON response
-  return jsonify(data)
-
-
+# home xml
 @app.route("/")
 def xml_home():
-  # Convert the JSON data to XML using xmltodict
-  data = load_home_json()
-  xml_data = xmltodict.unparse({"data": data}, pretty=True)
-  # Return the XML response
-  return Response(xml_data, content_type='text/xml')
+  return HomeController.load_home_xml()
+
+
+# home json
+@app.route("/json")
+def json_home():
+  data = HomeController.load_home_json()
+  return jsonify(data)
 
 
 # GEMPA TERBARU (from json to xml)
 @app.route('/new.xml')
 def datagempa_xml():
   data = GempaController.datagempa()
-  return xml_root_response(data)
+  return GempaController.xml_root_response(data)
 
 
 @app.route('/new.json')
 def datagempa_json():
   data = GempaController.datagempa()
-  return json_if(data)
+  return GempaController.json_if(data)
 
 
 # 200 GEMPA LEBIH 3 MAG
 @app.route('/EmgempaQL.xml')
 def EmgempaQL_xml():
   data = GempaController.EmgempaQL()
-  return xml_root_response(data)
+  return GempaController.xml_root_response(data)
 
 
 @app.route('/EmgempaQL.json')
 def EmgempaQL_json():
   data = GempaController.EmgempaQL()
-  return json_if(data)
+  return GempaController.json_if(data)
 
 
 # GEMPA DARI ZAMAN DAHULU
 @app.route('/katalog_gempa.xml')
 def katalog_gempa_xml():
   data = GempaController.katalog_gempa()
-  return xml_root_response(data)
+  return GempaController.xml_root_response(data)
 
 
 @app.route('/katalog_gempa.json')
 def katalog_gempa_json():
   data = GempaController.katalog_gempa()
-  return json_if(data)
+  return GempaController.json_if(data)
 
 
 # GEMPA LEBIH DARI SAMADENGAN 5 MAG (from xml to xml) 30 LIST
@@ -121,7 +64,7 @@ def katalog_gempa_json():
 @app.route('/last30event.xml')
 def last30event_xml():
   data = GempaController.last30event()
-  return xml_response(data)
+  return GempaController.xml_response(data)
 
 
 @app.route('/m5.json')
@@ -136,7 +79,7 @@ def last30event_json():
 @app.route('/last30feltevent.xml')
 def last30feltevent_xml():
   data = GempaController.last30feltevent()
-  return xml_response(data)
+  return GempaController.xml_response(data)
 
 
 @app.route('/felt.json')
@@ -151,7 +94,7 @@ def last30feltevent_json():
 @app.route('/last30tsunamievent.xml')
 def last30tsunamievent_xml():
   data = GempaController.last30tsunamievent()
-  return xml_response(data)
+  return GempaController.xml_response(data)
 
 
 @app.route('/tsunami.json')
@@ -166,7 +109,7 @@ def last30tsunamievent_json():
 @app.route('/live30event.xml')
 def live30event_xml():
   data = GempaController.live30event()
-  return xml_response(data)
+  return GempaController.xml_response(data)
 
 
 @app.route('/realtime.json')
@@ -180,84 +123,84 @@ def live30event_json():
 @app.route('/sensor_seismic.xml')
 def sensor_seismic_xml():
   data = GempaController.sensor_seismic()
-  return xml_root_response(data)
+  return GempaController.xml_root_response(data)
 
 
 @app.route('/sensor_seismic.json')
 def sensor_seismic_json():
   data = GempaController.sensor_seismic()
-  return json_if(data)
+  return GempaController.json_if(data)
 
 
 # SENSOR GLOBAL
 @app.route('/sensor_global.xml')
 def sensor_global_xml():
   data = GempaController.sensor_global()
-  return sensor_global_build_xml(data)
+  return GempaController.sensor_global_build_xml(data)
 
 
 @app.route('/sensor_global.json')
 def sensor_global_json():
   data = GempaController.sensor_global()
-  return json_if(data)
+  return GempaController.json_if(data)
 
 
 # HISTORI
 @app.route('/histori.xml')
 def histori_xml():
   data = GempaController.histori()
-  return xml_root_response(data)
+  return GempaController.xml_root_response(data)
 
 
 @app.route('/histori.json')
 def histori_json():
   data = GempaController.histori()
-  return json_if(data)
+  return GempaController.json_if(data)
 
 
 # INDO FAULTS LINES
 @app.route('/indo_faults_lines.xml')
 def indo_faults_lines_xml():
   data = GempaController.indo_faults_lines()
-  return faults_xml(data)
+  return GempaController.faults_xml(data)
 
 
 @app.route('/indo_faults_lines.json')
 def indo_faults_lines_json():
   data = GempaController.indo_faults_lines()
-  return json_if(data)
+  return GempaController.json_if(data)
 
 
 @app.route('/indo_faults_lines.geojson')
 def indo_faults_lines_geojson():
   geojson_data = GempaController.load_geojson()
-  return faults_geojson(geojson_data)
+  return GempaController.faults_geojson(geojson_data)
 
 
 # FAULT INDO WORLD
 @app.route('/fault_indo_world.xml')
 def fault_indo_world_xml():
   data = GempaController.fault_indo_world()
-  return faults_xml(data)
+  return GempaController.faults_xml(data)
 
 
 @app.route('/fault_indo_world.json')
 def fault_indo_world_json():
   data = GempaController.fault_indo_world()
-  return json_if(data)
+  return GempaController.json_if(data)
 
 
 @app.route('/fault_indo_world.geojson')
 def fault_indo_world_geojson():
   geojson_data = GempaController.load_geojson()
-  return faults_geojson(geojson_data)
+  return GempaController.faults_geojson(geojson_data)
 
 
 # Gempabumi Terbaru
 @app.route('/autogempa.xml')
 def autogempa_xml():
   data = GempaController.autogempa()
-  return xml_response(data)
+  return GempaController.xml_response(data)
 
 
 @app.route('/autogempa.json')
@@ -270,7 +213,7 @@ def autogempa_json():
 @app.route('/gempaterkini.xml')
 def gempaterkini_xml():
   data = GempaController.gempaterkini()
-  return xml_response(data)
+  return GempaController.xml_response(data)
 
 
 @app.route('/gempaterkini.json')
@@ -283,7 +226,7 @@ def gempaterkini_json():
 @app.route('/gempadirasakan.xml')
 def gempadirasakan_xml():
   data = GempaController.gempadirasakan()
-  return xml_response(data)
+  return GempaController.xml_response(data)
 
 
 @app.route('/gempadirasakan.json')
