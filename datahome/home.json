@@ -200,25 +200,25 @@
                 "format": "json"
             },
             {
-                "note": "Route to serve intensity logo images.",
+                "note": "Route to serve intensity logo images. Impact information based on Accelerometer equipment observation data.",
                 "route": "/<eventid>_rev/intensity_logo.jpg",
                 "function": "serve_intensity_logo",
                 "format": "image"
             },
             {
-                "note": "Route to serve impact list images.",
+                "note": "Route to serve impact list images. District-based impact information based on accelerometer equipment observation data.",
                 "route": "/<eventid>_rev/impact_list.jpg",
                 "function": "serve_impact_list",
                 "format": "image"
             },
             {
-                "note": "Route to serve stationlist MMI images.",
+                "note": "Route to serve stationlist MMI images. The results of PGA Max and MMI calculations are based on observational data from the Accerometer equipment.",
                 "route": "/<eventid>_rev/stationlist_MMI.jpg",
                 "function": "serve_stationlist_mmi",
                 "format": "image"
             },
             {
-                "note": "Route to serve loc_map images (PNG).",
+                "note": "Route to serve loc_map images (PNG). Distribution of Accelerometer equipment used.",
                 "route": "/<eventid>_rev/loc_map.png",
                 "function": "serve_loc_map",
                 "format": "image"
