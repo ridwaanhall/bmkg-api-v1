@@ -3,6 +3,7 @@ from flask import Flask, jsonify
 from Controller.GempaController import GempaController
 from Controller.HomeController import HomeController
 from Controller.ImageController import ImageController
+from Controller.ErrorController import ErrorController
 
 app = Flask(__name__)
 
@@ -264,3 +265,10 @@ def serve_loc_map(eventid):
 @app.route('/<eventid>.mmi.jpg')
 def mmi(eventid):
   return ImageController.mmi_route(eventid)
+
+
+# if requests is unavailable
+# Catch-all route for unavailable routes
+@app.route("/<path:path>")
+def handle_unavailable_route(path):
+  return ErrorController.unavailable(path)

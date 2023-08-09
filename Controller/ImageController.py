@@ -108,6 +108,7 @@ class ImageController:
     else:
       return "Failed to fetch JSON data", 500
 
+  # ========= url ========
   @staticmethod
   def intensity_logo(eventid):
     url = f"https://bmkg-content-inatews.storage.googleapis.com/{eventid}_rev/intensity_logo.jpg"
