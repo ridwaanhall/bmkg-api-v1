@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, Response
-from Controller.GempaController import datagempa, last30event, last30feltevent, last30tsunamievent, live30event, EmgempaQL, katalog_gempa, sensor_seismic, sensor_global, build_xml, histori, indo_faults_lines, convert_to_xml, fault_indo_world, load_geojson, process_gempa_data, autogempa, gempaterkini, gempadirasakan
+from Controller.GempaController import datagempa, last30event, last30feltevent, last30tsunamievent, live30event, EmgempaQL, katalog_gempa, sensor_seismic, sensor_global, build_xml, histori, indo_faults_lines, convert_to_xml, fault_indo_world, load_geojson, autogempa, gempaterkini, gempadirasakan
 from Controller.HomeController import load_home_json
+from Controller.ImageController import serve_image, process_gempa_data
 import xmltodict
 from xml.etree import ElementTree as ET
 
@@ -351,3 +352,9 @@ def gempadirasakan_xml():
 def gempadirasakan_json():
   data = gempadirasakan()
   return jsonify(data)
+
+
+# IMAGE
+@app.route('/20230809025718/intensity_logo.jpg')
+def image_route():
+  return serve_image()

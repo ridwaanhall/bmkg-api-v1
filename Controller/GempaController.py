@@ -1,6 +1,7 @@
 import requests, xmltodict, json
 import xml.etree.ElementTree as ET
 from flask import jsonify
+from Controller.ImageController import fetch_json_data
 
 
 def build_xml(data):
@@ -41,57 +42,24 @@ def load_geojson():
     return jsonify({"message": "Failed to fetch data."}), 500
 
 
-def fetch_json_data(json_url):
-  response = requests.get(json_url)
-  if response.status_code == 200:
-    return response.json()
-  else:
-    return None
-
-
-def construct_urls(event_id):
-  urls = {
-    'intensity_logo':
-    f"https://bmkg-content-inatews.storage.googleapis.com/{event_id}_rev/intensity_logo.jpg",
-    'loc_map':
-    f"https://bmkg-content-inatews.storage.googleapis.com/{event_id}_rev/loc_map.png",
-    'impact_list':
-    f"https://bmkg-content-inatews.storage.googleapis.com/{event_id}_rev/impact_list.jpg",
-    'stationlist_MMI':
-    f"https://bmkg-content-inatews.storage.googleapis.com/{event_id}_rev/stationlist_MMI.jpg",
-    f'{event_id}': f"https://data.bmkg.go.id/DataMKG/TEWS/{event_id}.mmi.jpg"
-  }
-
-  return urls
-
-
 #=========================
 # DATA GEMPA
 def datagempa():
   url = "https://bmkg-content-inatews.storage.googleapis.com/datagempa.json"
-  response = requests.get(url)
-  if response.status_code == 200:
-    return response.json()
-  else:
-    return None
+  json_data = fetch_json_data(url)
+  return json_data
 
 
 def EmgempaQL():
   url = "https://bmkg-content-inatews.storage.googleapis.com/3mgempaQL.json"
-  response = requests.get(url)
-  if response.status_code == 200:
-    return response.json()
-  else:
-    return None
+  json_data = fetch_json_data(url)
+  return json_data
 
 
 def katalog_gempa():
   url = "https://bmkg-content-inatews.storage.googleapis.com/katalog_gempa.json"
-  response = requests.get(url)
-  if response.status_code == 200:
-    return response.json()
-  else:
-    return None
+  json_data = fetch_json_data(url)
+  return json_data
 
 
 def last30event():
@@ -131,61 +99,34 @@ def live30event():
 
 def sensor_seismic():
   url = "https://bmkg-content-inatews.storage.googleapis.com/sensor_seismic.json"
-  response = requests.get(url)
-  if response.status_code == 200:
-    return response.json()
-  else:
-    return None
+  json_data = fetch_json_data(url)
+  return json_data
 
 
 def sensor_global():
   url = "https://bmkg-content-inatews.storage.googleapis.com/sensor_global.json"
-  response = requests.get(url)
-  if response.status_code == 200:
-    return response.json()
-  else:
-    return None
+  json_data = fetch_json_data(url)
+  return json_data
 
 
 def histori():
   url = "https://bmkg-content-inatews.storage.googleapis.com/histori.json"
-  response = requests.get(url)
-  if response.status_code == 200:
-    return response.json()
-  else:
-    return None
+  json_data = fetch_json_data(url)
+  return json_data
 
 
 #https://bmkg-content-inatews.storage.googleapis.com/indo_faults_lines.geojson
 def indo_faults_lines():
   url = "https://bmkg-content-inatews.storage.googleapis.com/indo_faults_lines.geojson"
-  response = requests.get(url)
-  if response.status_code == 200:
-    return response.json()
-  else:
-    return None
+  json_data = fetch_json_data(url)
+  return json_data
 
 
 #fault_indo_world.geojson
 def fault_indo_world():
   url = "https://bmkg-content-inatews.storage.googleapis.com/fault_indo_world.geojson"
-  response = requests.get(url)
-  if response.status_code == 200:
-    return response.json()
-  else:
-    return None
-
-
-def process_gempa_data():
-  json_url = "https://bmkg-content-inatews.storage.googleapis.com/datagempa.json"
-  json_data = fetch_json_data(json_url)
-  # get eventid
-  if json_data:
-    event_id = json_data['info']['eventid']
-    urls = construct_urls(event_id)
-    return urls
-  else:
-    return None
+  json_data = fetch_json_data(url)
+  return json_data
 
 
 def autogempa():
