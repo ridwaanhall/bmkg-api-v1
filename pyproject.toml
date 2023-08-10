@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "repl_nix_earthquaqe-bmkg-api-v1"
+name = "repl_nix_earthquaqe-bmkg-api"
 version = "0.1.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
+description = "this earthquaqe API project is from BMKG"
+authors = ["Ridwan Halim <erbyl14@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
