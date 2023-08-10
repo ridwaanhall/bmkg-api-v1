@@ -241,7 +241,19 @@ def gempadirasakan_json():
   return jsonify(data)
 
 
-# IMAGE
+@app.route('/aeicgempaQL.xml')
+def aeicgempaQL_xml():
+  data = GempaController.aeicgempaQL()
+  return GempaController.xml_root_response(data)
+
+
+@app.route('/aeicgempaQL.json')
+def aeicgempaQL_json():
+  data = GempaController.aeicgempaQL()
+  return GempaController.json_if(data)
+
+
+# ============ IMAGE ===================
 # Define route to serve intensity logo images
 @app.route('/<eventid>_rev/intensity_logo.jpg')
 def serve_intensity_logo(eventid):
@@ -270,6 +282,8 @@ def serve_loc_map(eventid):
 @app.route('/<eventid>.mmi.jpg')
 def mmi(eventid):
   return ImageController.mmi_route(eventid)
+
+
 
 
 # if requests is unavailable
