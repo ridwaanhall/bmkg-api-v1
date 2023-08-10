@@ -1,15 +1,20 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, redirect, url_for
 
 from Controller.GempaController import GempaController
-from Controller.HomeController  import HomeController
+from Controller.HomeController import HomeController
 from Controller.ImageController import ImageController
 from Controller.ErrorController import ErrorController
 
 app = Flask(__name__)
 
 
-# home xml
 @app.route("/")
+def home():
+  return redirect(url_for("xml_home"))
+
+
+# home xml
+@app.route("/xml")
 def xml_home():
   return HomeController.load_home_xml()
 
