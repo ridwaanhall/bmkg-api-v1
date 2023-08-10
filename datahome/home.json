@@ -2,7 +2,8 @@
   "base_url": "https://earthquake-bmkg-api.ridwaanhall.repl.co/",
   "source": "bmkg",
   "how_to_use": "Use base URL + route",
-  "route_available": "new.xml, new.json, EmgempaQL.xml, EmgempaQL.json, katalog_gempa.xml, katalog_gempa.json, m5.xml, m5.json, felt.xml, felt.json, tsunami.xml, tsunami.json, realtime.xml, realtime.json, sensor_seismic.xml, sensor_seismic.json, sensor_global.xml, sensor_global.json, histori.xml, histori.json, indo_faults_lines.xml, indo_faults_lines.json, indo_faults_lines.geojson, fault_indo_world.xml, fault_indo_world.json, fault_indo_world.geojson, autogempa.xml, autogempa.json, gempaterkini.xml, gempaterkini.json, gempadirasakan.xml, gempadirasakan.json, <eventid>_rev/intensity_logo.jpg, <eventid>_rev/impact_list.jpg, <eventid>_rev/stationlist_MMI.jpg, <eventid>_rev/loc_map.png, <eventid>.mmi.jpg",
+  "total_routes": "38 routes",
+  "route_available": "new.xml, new.json, EmgempaQL.xml, EmgempaQL.json, katalog_gempa.xml, katalog_gempa.json, m5.xml, m5.json, felt.xml, felt.json, tsunami.xml, tsunami.json, realtime.xml, realtime.json, sensor_seismic.xml, sensor_seismic.json, sensor_global.xml, sensor_global.json, histori.xml, histori.json, indo_faults_lines.xml, indo_faults_lines.json, indo_faults_lines.geojson, fault_indo_world.xml, fault_indo_world.json, fault_indo_world.geojson, autogempa.xml, autogempa.json, gempaterkini.xml, gempaterkini.json, gempadirasakan.xml, gempadirasakan.json, aeicgempaQL.xml, aeicgempaQL.json, <eventid>_rev/intensity_logo.jpg, <eventid>_rev/impact_list.jpg, <eventid>_rev/stationlist_MMI.jpg, <eventid>_rev/loc_map.png, <eventid>.mmi.jpg",
   "routes":
     {
       "route_list":
@@ -197,6 +198,18 @@
                 "note": "Latest 15 felt earthquakes in JSON format.",
                 "route": "/gempadirasakan.json",
                 "function": "gempadirasakan",
+                "format": "json"
+            },
+            {
+                "note": "ASEAN EARTHQUAKE INFORMATION CENTER data in XML format.",
+                "route": "/aeicgempaQL.xml",
+                "function": "aeicgempaQL",
+                "format": "xml"
+            },
+            {
+                "note": "ASEAN EARTHQUAKE INFORMATION CENTER data in JSON format.",
+                "route": "/aeicgempaQL.json",
+                "function": "aeicgempaQL",
                 "format": "json"
             },
             {
