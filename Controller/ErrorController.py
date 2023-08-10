@@ -12,14 +12,17 @@ class ErrorController:
     response = {
       "message": f"The requested route '{path}' is unavailable.",
       "ip": requester_ip,
-      "datetime": now
+      "datetime": now.strftime('%Y-%m-%d %H:%M:%S')
     }
-    del db["IP_address"]
-    del db["path"]
-    del db["datetime"]
 
-    keys = db.keys
+    db["IP_address"] = requester_ip
+    db["path"]       = path
+    db["datetime"]   = now.strftime('%Y-%m-%d %H:%M:%S')
 
-    for key in keys:
-      print(f"""{key} : {db["key"]}""")
+    stored_data = {}
+    for key in db.keys():
+      stored_data[key] = db[key]
+
+    #print("Stored Data:", stored_data)
+
     return jsonify(response), 404
