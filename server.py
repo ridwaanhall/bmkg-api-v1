@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 
 from Controller.GempaController import GempaController
-from Controller.HomeController import HomeController
+from Controller.HomeController  import HomeController
 from Controller.ImageController import ImageController
 from Controller.ErrorController import ErrorController
 
