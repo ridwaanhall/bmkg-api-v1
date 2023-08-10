@@ -1,5 +1,5 @@
 from flask import jsonify, request
-from replit import db
+#from replit import db
 from datetime import datetime
 
 
@@ -12,16 +12,16 @@ class ErrorController:
     response = {
       "message": f"The requested route '{path}' is unavailable.",
       "ip": requester_ip,
-      "datetime": now.strftime('%Y-%m-%d %H:%M:%S')
+      "datetimeUTC": now.strftime('%Y-%m-%d %H:%M:%S')
     }
 
-    db["IP_address"] = requester_ip
-    db["path"]       = path
-    db["datetime"]   = now.strftime('%Y-%m-%d %H:%M:%S')
+    #db["IP_address"] = requester_ip
+    #db["path"]       = path
+    #db["datetime"]   = now.strftime('%Y-%m-%d %H:%M:%S')
 
-    stored_data = {}
-    for key in db.keys():
-      stored_data[key] = db[key]
+    #stored_data = {}
+    #for key in db.keys():
+    #   stored_data[key] = db[key]
 
     #print("Stored Data:", stored_data)
 
