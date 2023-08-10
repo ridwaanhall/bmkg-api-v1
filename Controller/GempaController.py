@@ -212,3 +212,10 @@ class GempaController:
     xml_data = response.content
     data_dict = xmltodict.parse(xml_data)
     return data_dict
+
+  # ASEAN EARTHQUAKE INFORMATION CENTER
+  @staticmethod
+  def aeicgempaQL():
+    url = "https://bmkg-content-inatews.storage.googleapis.com/aeicgempaQL.json"
+    json_data = GempaController.fetch_json_data(url)
+    return json_data
