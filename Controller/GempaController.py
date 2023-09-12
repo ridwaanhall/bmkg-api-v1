@@ -183,7 +183,8 @@ class GempaController:
     json_data = GempaController.fetch_json_data(url)
     return json_data
 
-  #fault_indo_world.geojson@staticmethod
+  #fault_indo_world.geojson
+  @staticmethod
   def fault_indo_world():
     url = "https://bmkg-content-inatews.storage.googleapis.com/fault_indo_world.geojson"
     json_data = (url)
