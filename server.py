@@ -284,6 +284,8 @@ def mmi(eventid):
   return ImageController.mmi_route(eventid)
 
 
+# NARATION
+
 
 
 # if requests is unavailable
