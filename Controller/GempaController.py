@@ -192,11 +192,50 @@ class GempaController:
 
   @staticmethod
   def autogempa():
-    url = "https://data.bmkg.go.id/DataMKG/TEWS/autogempa.xml"
-    response = requests.get(url)
-    xml_data = response.content
-    data_dict = xmltodict.parse(xml_data)
-    return data_dict
+        url = "https://data.bmkg.go.id/DataMKG/TEWS/autogempa.xml"
+        try:
+          response = requests.get(url)
+          response.raise_for_status()  # Raise an exception for HTTP errors (4xx and 5xx)
+
+          xml_data = response.content
+          root = ET.fromstring(xml_data)
+
+          # Extract relevant information from XML
+          tanggal = root.findtext("gempa/Tanggal")
+          jam = root.findtext("gempa/Jam")
+          coordinates = root.findtext("gempa/point/coordinates")
+          lintang = root.findtext("gempa/Lintang")
+          bujur = root.findtext("gempa/Bujur")
+          magnitude = root.findtext("gempa/Magnitude")
+          kedalaman = root.findtext("gempa/Kedalaman")
+          wilayah = root.findtext("gempa/Wilayah")
+          potensi = root.findtext("gempa/Potensi")
+          dirasakan = root.findtext("gempa/Dirasakan")
+          shakemap = root.findtext("gempa/Shakemap")
+
+          # Create a dictionary with the extracted information
+          data_dict = {
+              "Tanggal": tanggal,
+              "Jam": jam,
+              "Coordinates": coordinates,
+              "Lintang": lintang,
+              "Bujur": bujur,
+              "Magnitude": magnitude,
+              "Kedalaman": kedalaman,
+              "Wilayah": wilayah,
+              "Potensi": potensi,
+              "Dirasakan": dirasakan,
+              "Shakemap": shakemap
+          }
+
+          return data_dict
+
+        except requests.exceptions.RequestException as e:
+          # Handle HTTP request errors
+          return {'error': f'Failed to fetch data. Error: {e}'}
+        except ET.ParseError as e:
+          # Handle XML parsing errors
+          return {'error': f'Failed to parse XML. Error: {e}'}
 
   @staticmethod
   def gempaterkini():
